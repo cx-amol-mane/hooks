@@ -4,17 +4,15 @@ package codec
 
 import (
 	"encoding/json"
-	"io"
 	"os"
 )
 
-// DecodeStdin reads all of stdin and unmarshals the JSON into v.
+// DecodeStdin decodes one JSON object from stdin.
+// Uses json.Decoder instead of io.ReadAll so it returns as soon as a
+// complete JSON value is read, without waiting for EOF. This is critical
+// for Cursor, which writes JSON to the pipe but does NOT close it.
 func DecodeStdin(v any) error {
-	data, err := io.ReadAll(os.Stdin)
-	if err != nil {
-		return err
-	}
-	return json.Unmarshal(data, v)
+	return json.NewDecoder(os.Stdin).Decode(v)
 }
 
 // EncodeStdout marshals v to JSON and writes it to stdout followed by a newline.

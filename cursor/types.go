@@ -106,7 +106,7 @@ type PromptPreEvent struct {
 
 // PromptPreResult is the response type for beforeSubmitPrompt hooks.
 type PromptPreResult struct {
-	Continue bool   `json:"continue,omitempty"` // false to block
+	Continue bool   `json:"continue"`
 	UserNote string `json:"user_message,omitempty"`
 }
 

@@ -148,16 +148,15 @@ func WhenAgentIdle(fn AgentIdleFunc) {
 	})
 
 	AddRoute("gemini-after-agent", func() {
-		ProcessE(func(ev gemini.AfterAgentEvent) (gemini.AfterAgentResult, error) {
+		Process(func(ev gemini.AfterAgentEvent) gemini.AfterAgentResult {
 			verdict := fn(AgentIdleEvent{
 				Agent: AgentGemini, SessionID: ev.SessionID, WorkDir: ev.WorkDir,
 				IsRepeat: ev.HookActive, Raw: &ev,
 			})
 			if !verdict.Proceed {
-				// Exit code 2 causes Gemini to retry the turn with stderr as feedback.
-				return gemini.AfterAgentResult{}, errors.New(verdict.Feedback)
+				return gemini.RetryWithFeedback(verdict.Feedback)
 			}
-			return gemini.AcceptResponse(), nil
+			return gemini.AcceptResponse()
 		})
 	})
 }
@@ -330,9 +329,9 @@ func BeforeToolCall(fn ToolCallFunc) {
 		})
 	})
 
-	// Gemini CLI — all tools (blocking via exit code 2)
+	// Gemini CLI — all tools (JSON deny response)
 	AddRoute("gemini-before-tool", func() {
-		ProcessE(func(ev gemini.BeforeToolEvent) (gemini.BeforeToolResult, error) {
+		Process(func(ev gemini.BeforeToolEvent) gemini.BeforeToolResult {
 			kind := geminiToolKind(ev.ToolName)
 			verdict := fn(ToolCallEvent{
 				Agent: AgentGemini, Kind: kind,
@@ -340,9 +339,9 @@ func BeforeToolCall(fn ToolCallFunc) {
 				Raw: &ev,
 			})
 			if !verdict.Permit {
-				return gemini.BeforeToolResult{}, errors.New(verdict.Message)
+				return gemini.DenyToolCall(verdict.Message)
 			}
-			return gemini.ApproveToolCall(), nil
+			return gemini.ApproveToolCall()
 		})
 	})
 }
@@ -588,17 +587,17 @@ func BeforePrompt(fn PromptFunc) {
 	})
 
 	AddRoute("gemini-before-agent", func() {
-		ProcessE(func(ev gemini.BeforeAgentEvent) (gemini.BeforeAgentResult, error) {
+		Process(func(ev gemini.BeforeAgentEvent) gemini.BeforeAgentResult {
 			verdict := fn(PromptEvent{
 				Agent: AgentGemini, SessionID: ev.SessionID, Text: ev.Prompt, Raw: &ev,
 			})
 			if !verdict.Accept {
-				return gemini.BeforeAgentResult{}, errors.New(verdict.Message)
+				return gemini.RejectTurn(verdict.Message)
 			}
 			if verdict.Message != "" {
-				return gemini.EnrichTurn(verdict.Message), nil
+				return gemini.EnrichTurn(verdict.Message)
 			}
-			return gemini.AcceptTurn(), nil
+			return gemini.AcceptTurn()
 		})
 	})
 }

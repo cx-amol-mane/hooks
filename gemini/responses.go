@@ -35,6 +35,13 @@ func AcceptTurn() BeforeAgentResult {
 	return BeforeAgentResult{}
 }
 
+// RejectTurn blocks the agent turn; reason is shown to the user.
+func RejectTurn(reason string) BeforeAgentResult {
+	return BeforeAgentResult{
+		ResultBase: ResultBase{Proceed: boolPtr(false), Reason: reason},
+	}
+}
+
 // EnrichTurn allows the turn and appends additional context to the prompt.
 func EnrichTurn(ctx string) BeforeAgentResult {
 	return BeforeAgentResult{
@@ -50,9 +57,10 @@ func AcceptResponse() AfterAgentResult {
 }
 
 // RetryWithFeedback rejects the response; reason is fed back as retry context.
-// Use this to trigger another agent iteration (e.g., via ProcessE returning an error).
-func RetryWithFeedback() AfterAgentResult {
-	return AfterAgentResult{}
+func RetryWithFeedback(reason string) AfterAgentResult {
+	return AfterAgentResult{
+		ResultBase: ResultBase{Proceed: boolPtr(false), Reason: reason},
+	}
 }
 
 // --- SessionStart responses ---

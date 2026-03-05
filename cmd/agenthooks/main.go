@@ -14,7 +14,7 @@ import (
 	"os/exec"
 	"path/filepath"
 
-	"github.com/checkmarx/agenthooks/internal/scaffold"
+	"github.com/cx-amol-mane/hooks/internal/scaffold"
 )
 
 func main() {

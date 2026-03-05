@@ -7,7 +7,7 @@ Write one handler, compile one binary, and it works with **Claude Code**, **Curs
 ```go
 package main
 
-import "github.com/checkmarx/agenthooks"
+import "github.com/cx-amol-mane/hooks"
 
 func main() {
     agenthooks.BeforeToolCall(func(e agenthooks.ToolCallEvent) agenthooks.ToolVerdict {
@@ -34,7 +34,7 @@ Every AI coding agent has its own hook system with different JSON schemas, respo
 ## Installation
 
 ```bash
-go get github.com/checkmarx/agenthooks
+go get github.com/cx-amol-mane/hooks
 ```
 
 ## Supported Agents
@@ -147,8 +147,8 @@ For advanced use cases that need platform-specific event data, use `AddRoute` wi
 
 ```go
 import (
-    "github.com/checkmarx/agenthooks"
-    "github.com/checkmarx/agenthooks/claude"
+    "github.com/cx-amol-mane/hooks"
+    "github.com/cx-amol-mane/hooks/claude"
 )
 
 agenthooks.AddRoute("claude-pre-tool-use", func() {
@@ -165,11 +165,11 @@ agenthooks.AddRoute("claude-pre-tool-use", func() {
 
 | Package | Import Path |
 |---|---|
-| Claude Code | `github.com/checkmarx/agenthooks/claude` |
-| Cursor | `github.com/checkmarx/agenthooks/cursor` |
-| Windsurf | `github.com/checkmarx/agenthooks/windsurf` |
-| Factory Droid | `github.com/checkmarx/agenthooks/droid` |
-| Gemini CLI | `github.com/checkmarx/agenthooks/gemini` |
+| Claude Code | `github.com/cx-amol-mane/hooks/claude` |
+| Cursor | `github.com/cx-amol-mane/hooks/cursor` |
+| Windsurf | `github.com/cx-amol-mane/hooks/windsurf` |
+| Factory Droid | `github.com/cx-amol-mane/hooks/droid` |
+| Gemini CLI | `github.com/cx-amol-mane/hooks/gemini` |
 
 ## Building & Installing
 
@@ -177,10 +177,10 @@ agenthooks.AddRoute("claude-pre-tool-use", func() {
 
 ```bash
 # Create a starter hooks project in the current directory
-go run github.com/checkmarx/agenthooks/cmd/agenthooks init
+go run github.com/cx-amol-mane/hooks/cmd/agenthooks init
 
 # Or scaffold into a specific directory
-go run github.com/checkmarx/agenthooks/cmd/agenthooks init --dir ./my-hooks-project
+go run github.com/cx-amol-mane/hooks/cmd/agenthooks init --dir ./my-hooks-project
 ```
 
 The scaffold command generates:
@@ -196,14 +196,14 @@ The scaffold command generates:
 go build -o myhook .
 
 # Cross-compile for all supported platforms (macOS, Linux, Windows × amd64/arm64)
-go run github.com/checkmarx/agenthooks/cmd/agenthooks build
+go run github.com/cx-amol-mane/hooks/cmd/agenthooks build
 # Outputs to dist/
 ```
 
 ### Install hooks into all agents
 
 ```bash
-go run github.com/checkmarx/agenthooks/cmd/agenthooks install ./myhook
+go run github.com/cx-amol-mane/hooks/cmd/agenthooks install ./myhook
 ```
 
 This automatically writes the correct configuration into each agent's settings file:
@@ -222,7 +222,7 @@ package main
 import (
     "strings"
 
-    "github.com/checkmarx/agenthooks"
+    "github.com/cx-amol-mane/hooks"
 )
 
 func main() {
@@ -262,7 +262,7 @@ func main() {
 
 ```bash
 go build -o myhook .
-go run github.com/checkmarx/agenthooks/cmd/agenthooks install ./myhook
+go run github.com/cx-amol-mane/hooks/cmd/agenthooks install ./myhook
 ```
 
 ## Testing with Different Agents
@@ -292,7 +292,7 @@ The first argument is the **route name** — it tells the binary which handler t
 1. Build and install:
    ```bash
    go build -o myhook .
-   go run github.com/checkmarx/agenthooks/cmd/agenthooks install ./myhook
+   go run github.com/cx-amol-mane/hooks/cmd/agenthooks install ./myhook
    ```
 2. Open Claude Code — your hooks are now active.
 3. Try triggering a hooked action (e.g., ask Claude to run a shell command).
@@ -352,7 +352,7 @@ func TestDenyDangerousCommands(t *testing.T) {
 ## Architecture
 
 ```
-github.com/checkmarx/agenthooks
+github.com/cx-amol-mane/hooks
 ├── agenthooks.go      # Core API: AddRoute, Dispatch, Process, ProcessE
 ├── unified.go         # Unified hooks: WhenAgentIdle, BeforeToolCall, etc.
 ├── claude/            # Claude Code types, events & response helpers

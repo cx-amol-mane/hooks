@@ -3,7 +3,7 @@ package cursor_test
 import (
 	"testing"
 
-	"github.com/checkmarx/agenthooks/cursor"
+	"github.com/cx-amol-mane/hooks/cursor"
 )
 
 func TestPermissionHelpers(t *testing.T) {

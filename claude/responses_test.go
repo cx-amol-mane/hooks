@@ -3,7 +3,7 @@ package claude_test
 import (
 	"testing"
 
-	"github.com/checkmarx/agenthooks/claude"
+	"github.com/cx-amol-mane/hooks/claude"
 )
 
 func TestStopResponses(t *testing.T) {

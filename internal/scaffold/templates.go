@@ -7,7 +7,7 @@ import (
 	"os"
 	"strings"
 
-	hooks "github.com/checkmarx/agenthooks"
+	hooks "github.com/cx-amol-mane/hooks"
 )
 
 // =============================================================================
@@ -265,7 +265,7 @@ One hooks binary for Claude Code, Cursor, Windsurf Cascade, Factory Droid, and G
 go mod init github.com/your-org/your-hooks
 
 # 2. Add the dependency
-go get github.com/checkmarx/agenthooks@latest
+go get github.com/cx-amol-mane/hooks@latest
 go mod tidy
 
 # 3. Build your binary

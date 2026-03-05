@@ -6,11 +6,11 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/checkmarx/agenthooks/claude"
-	"github.com/checkmarx/agenthooks/cursor"
-	"github.com/checkmarx/agenthooks/droid"
-	"github.com/checkmarx/agenthooks/gemini"
-	"github.com/checkmarx/agenthooks/windsurf"
+	"github.com/cx-amol-mane/hooks/claude"
+	"github.com/cx-amol-mane/hooks/cursor"
+	"github.com/cx-amol-mane/hooks/droid"
+	"github.com/cx-amol-mane/hooks/gemini"
+	"github.com/cx-amol-mane/hooks/windsurf"
 )
 
 // AgentID identifies which AI coding agent triggered the hook.

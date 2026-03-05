@@ -5,7 +5,7 @@ import (
 	"os"
 	"testing"
 
-	"github.com/checkmarx/agenthooks/internal/codec"
+	"github.com/cx-amol-mane/hooks/internal/codec"
 )
 
 func TestDecodeStdin(t *testing.T) {

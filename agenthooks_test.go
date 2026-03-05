@@ -5,7 +5,7 @@ import (
 	"os"
 	"testing"
 
-	"github.com/checkmarx/agenthooks"
+	"github.com/cx-amol-mane/hooks"
 )
 
 func TestAddRouteAndDispatch(t *testing.T) {

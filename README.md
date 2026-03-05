@@ -173,6 +173,22 @@ agenthooks.AddRoute("claude-pre-tool-use", func() {
 
 ## Building & Installing
 
+### Scaffold a new hooks project
+
+```bash
+# Create a starter hooks project in the current directory
+go run github.com/checkmarx/agenthooks/cmd/agenthooks init
+
+# Or scaffold into a specific directory
+go run github.com/checkmarx/agenthooks/cmd/agenthooks init --dir ./my-hooks-project
+```
+
+The scaffold command generates:
+- `main.go` with all 4 unified hook handlers wired
+- `README.md` with quick-start and local testing commands
+- `.gitignore` for common build outputs and secrets
+- `policy.json` starter policy you can customize
+
 ### Build your hook binary
 
 ```bash
@@ -345,7 +361,8 @@ github.com/checkmarx/agenthooks
 ├── droid/             # Factory Droid types, events & response helpers
 ├── gemini/            # Gemini CLI types, events & response helpers
 ├── internal/codec/    # JSON stdin/stdout serialization
-└── cmd/agenthooks/    # CLI tool: install & build commands
+├── internal/scaffold/ # Templates and generator for `agenthooks init`
+└── cmd/agenthooks/    # CLI tool: init, install, and build commands
 ```
 
 ### How it works
@@ -384,6 +401,4 @@ github.com/checkmarx/agenthooks
 | `e.IsShell()` | `ToolCallEvent` | Is this a shell command? |
 | `e.IsMCP()` | `ToolCallEvent` | Is this an MCP tool call? |
 
-## License
 
-See [LICENSE](LICENSE) for details.

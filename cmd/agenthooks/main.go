@@ -1,9 +1,10 @@
-// Command agenthooks provides install and build utilities for agent hooks.
+// Command agenthooks provides install, build, and init utilities for agent hooks.
 //
 // Usage:
 //
-//	agenthooks install <binary>  — write hook configs pointing to <binary> into all agent settings files
-//	agenthooks build             — cross-compile your hook binary for all supported platforms
+//	agenthooks init [--dir <path>]   — scaffold a new hooks project
+//	agenthooks install <binary>      — write hook configs pointing to <binary> into all agent settings files
+//	agenthooks build                 — cross-compile your hook binary for all supported platforms
 package main
 
 import (
@@ -12,6 +13,8 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
+
+	"github.com/checkmarx/agenthooks/internal/scaffold"
 )
 
 func main() {
@@ -20,6 +23,8 @@ func main() {
 		os.Exit(1)
 	}
 	switch os.Args[1] {
+	case "init":
+		scaffold.Run(os.Args[2:])
 	case "install":
 		if len(os.Args) < 3 {
 			fmt.Fprintln(os.Stderr, "usage: agenthooks install <binary-path>")
@@ -45,8 +50,9 @@ func printUsage() {
 	fmt.Fprintln(os.Stderr, "agenthooks — hook configuration tool")
 	fmt.Fprintln(os.Stderr, "")
 	fmt.Fprintln(os.Stderr, "Commands:")
-	fmt.Fprintln(os.Stderr, "  install <binary>   Write hook configs for all agents pointing to <binary>")
-	fmt.Fprintln(os.Stderr, "  build              Cross-compile hook binary for all platforms")
+	fmt.Fprintln(os.Stderr, "  init [--dir <path>]   Scaffold a new hooks project (default: current directory)")
+	fmt.Fprintln(os.Stderr, "  install <binary>      Write hook configs for all agents pointing to <binary>")
+	fmt.Fprintln(os.Stderr, "  build                 Cross-compile hook binary for all platforms")
 }
 
 // =============================================================================
